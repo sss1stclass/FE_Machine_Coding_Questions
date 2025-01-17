@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './EDBM.css'
+import Forms from './Forms';
 
 const data = [
     {
@@ -127,9 +128,20 @@ const data = [
 const EmployeeDBManagement = () => {
     const [empInfo, setEmpInfo] = useState<any>(null);
     const [eData, setEdata] = useState<any>(data);
+    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState<any>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        dob: '',
+        age: '',
+        salary: '',
+        address: ''
+    })
+
 
     const handleSelect = (eid: any) => {
-        const selectedEmp = data.find((item: any) => item.id === eid);
+        const selectedEmp = eData.find((item: any) => item.id === eid);
         setEmpInfo(selectedEmp);
 
     };
@@ -139,59 +151,86 @@ const EmployeeDBManagement = () => {
         const updatedData = eData.filter((item: any) => item.id !== eid);
         setEdata(updatedData);
         if (empInfo && empInfo.id === eid) {
-            setEmpInfo(null); 
+            setEmpInfo(null);
         }
     };
+    const handleOpenForm = () => {
+        setShowForm(!showForm);
+        // setFormData({});
+    }
+    const handleSetData = (event: any) => {
+        const { name, value } = event?.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        })
+    }
 
     const { firstName, lastName, imageUrl, email, dob, age, salary, address } = empInfo || {};
+    const newData = {id: Math.floor(Math.random() * 1000),...formData,imageUrl: "https://cdn-icons-png.flaticon.com/512/0/93.png",contactNumber: "4622392580"}
+
+    const addNewEmp = ()=>{
+        setEdata([...eData,newData])
+    }
+
+    console.log(eData)
 
     return (
-        <div className='box'>
-            <h3>Employee Management System</h3>
-            <div className='innerBox'>
-                <div className='employeebox'>
-                    <h4 className='eName'>Employee List</h4>
-                    <div className='br'></div>
-                    <div>
-                        <ul style={{ listStyleType: 'none', margin: 0, padding: 0, marginTop: 12 }}>
-                            {eData.map((item: any) => {
-                                const { id, firstName: enamee, lastName: eLname }: any = item;
-                                return (
-                                    <li key={id} style={{ textDecoration: 'none' }}>
-                                        <div style={{ border: '1px solid gray', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <button onClick={() => handleSelect(id)}>
-                                                <h5>{enamee} {eLname}</h5>
-                                            </button>
-                                            <button onClick={() => handleDelete(id)}>Remove</button>
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+        <>
+            <div className='box'>
+                <h3>Employee Management System</h3>
+                <button  onClick={handleOpenForm}>Add Employee</button>
+                <div className='innerBox'>
+                    <div className='employeebox'>
+                        <h4 className='eName'>Employee List</h4>
+                        <div className='br'></div>
+                        <div>
+                            <ul style={{ listStyleType: 'none', margin: 0, padding: 0, marginTop: 12 }}>
+                                {eData.map((item: any) => {
+                                    const { id, firstName: enamee, lastName: eLname }: any = item;
+                                    return (
+                                        <li key={id} style={{ textDecoration: 'none' }}>
+                                            <div style={{ border: '1px solid gray', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                <button onClick={() => handleSelect(id)}>
+                                                    <h5>{enamee} {eLname}</h5>
+                                                </button>
+                                                <button onClick={() => handleDelete(id)}>Remove</button>
+                                            </div>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className='employeeDisplaybox'>
+                        <h4 className='eName'>Employee Information</h4>
+                        <div className='br'></div>
+                        <div>
+                            {empInfo ? (
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                                    <img style={{ height: '200px' }} src={imageUrl} alt="" />
+                                    <h4>{firstName} {lastName}</h4>
+                                    <h3>{email}</h3>
+                                    <h3>{age}</h3>
+                                    <h3>{salary}</h3>
+                                    <h3>{dob}</h3>
+                                    <h3>{address}</h3>
+                                </div>
+                            ) : (
+                                <h1>No data available</h1>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className='employeeDisplaybox'>
-                    <h4 className='eName'>Employee Information</h4>
-                    <div className='br'></div>
-                    <div>
-                        {empInfo ? (
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                                <img style={{ height: '200px' }} src={imageUrl} alt="" />
-                                <h4>{firstName} {lastName}</h4>
-                                <h3>{email}</h3>
-                                <h3>{age}</h3>
-                                <h3>{salary}</h3>
-                                <h3>{dob}</h3>
-                                <h3>{address}</h3>
-                            </div>
-                        ) : (
-                            <h1>No data available</h1>
-                        )}
-                    </div>
-                </div>
             </div>
-        </div>
+            {
+                showForm && (
+                    <Forms handleOpenForm={handleOpenForm} formData={formData} handleSetData={handleSetData} addNewEmp={addNewEmp}/>
+                )
+            }
+        </>
     );
 }
 
