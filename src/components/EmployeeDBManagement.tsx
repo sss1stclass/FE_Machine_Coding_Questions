@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './EDBM.css'
 import Forms from './Forms';
 
@@ -156,7 +156,7 @@ const EmployeeDBManagement = () => {
     };
     const handleOpenForm = () => {
         setShowForm(!showForm);
-        // setFormData({});
+        setFormData({});
     }
     const handleSetData = (event: any) => {
         const { name, value } = event?.target;
@@ -178,8 +178,10 @@ const EmployeeDBManagement = () => {
     return (
         <>
             <div className='box'>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <h3>Employee Management System</h3>
-                <button  onClick={handleOpenForm}>Add Employee</button>
+                <button  onClick={handleOpenForm} style={{position:'relative', top:5, right:10}}>Add Employee</button>
+                </div>
                 <div className='innerBox'>
                     <div className='employeebox'>
                         <h4 className='eName'>Employee List</h4>

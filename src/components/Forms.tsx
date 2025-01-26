@@ -1,4 +1,3 @@
-import React from 'react'
 const modalOverlayStyle: any = {
     position: "fixed",
     top: 0,
@@ -38,10 +37,6 @@ const flex : any ={
 
 const Forms = ({ handleOpenForm, formData, handleSetData, addNewEmp }: any) => {
     const {firstName, lastName, email, dob, age, salary, address}:any = formData;
-    const handleSubmit = ()=>{
-        console.log(formData)
-    }
-    console.log(formData,firstName,lastName)
 
     return (
         <div style={modalOverlayStyle} onClick={handleOpenForm}>
