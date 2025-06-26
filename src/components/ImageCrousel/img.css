@@ -1,0 +1,24 @@
+
+.main{
+
+ position: relative;
+
+}
+.flex{
+        display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-left{
+     position: absolute;
+    left:0px;
+    top: 200px;
+}
+.btn-right{
+     position: absolute;
+    right:0px;
+    top: 200px;
+}
+.img{
+ height: 100px;
+}
