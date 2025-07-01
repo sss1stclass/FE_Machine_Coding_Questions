@@ -1,4 +1,4 @@
-import { Box, stepClasses, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Page1 from './Page1';
 import { useState } from 'react';
 import Page2 from './Page2';
