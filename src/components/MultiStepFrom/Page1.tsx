@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 
-const Page1 = ({steps, setSteps}:any) => {
+const Page1 = ({ setSteps, formdata, handleChange }: any) => {
   return (
     <Box width="100%">
       <form>
@@ -38,6 +38,8 @@ const Page1 = ({steps, setSteps}:any) => {
               variant="outlined"
               name="name"
               label="Name"
+              value={formdata.name}
+              onChange={handleChange}
               placeholder="Enter your name..."
             />
             <TextField
@@ -69,6 +71,9 @@ const Page1 = ({steps, setSteps}:any) => {
                 labelId="gender-label"
                 id="gender-select"
                 label="Gender"
+                name='gender'
+                onChange={handleChange}
+                value = {formdata.gender}
                 defaultValue=""
               >
                 <MenuItem value="male">Male</MenuItem>
@@ -79,8 +84,11 @@ const Page1 = ({steps, setSteps}:any) => {
 
             <FormGroup sx={{ width: "80%" }}>
               <FormControlLabel
-                control={<Checkbox defaultChecked />}
+                control={<Checkbox/>}
                 label="Student"
+                name='isStudent'
+                value={formdata.isStudent}
+                onChange={handleChange}
               />
             </FormGroup>
           </Box>
@@ -98,7 +106,7 @@ const Page1 = ({steps, setSteps}:any) => {
             <Button variant="contained" color="info">
               Reset
             </Button>
-            <Button onClick={()=>setSteps(1)} variant="contained" color="success">
+            <Button onClick={() => setSteps(1)} variant="contained" color="success">
               Next
             </Button>
           </Box>
